@@ -2,25 +2,49 @@
   "name": "remotion-poc-v2",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "remotion": "remotion studio",
+    "render": "remotion render"
   },
   "dependencies": {
+    "@remotion/bundler": "4.0.240",
+    "@remotion/cli": "4.0.240",
+    "@remotion/google-fonts": "4.0.240",
+    "@remotion/lambda": "4.0.240",
+    "@remotion/noise": "4.0.240",
+    "@remotion/paths": "4.0.240",
+    "@remotion/player": "4.0.240",
+    "@remotion/preload": "4.0.240",
+    "@remotion/shapes": "4.0.240",
+    "@remotion/transitions": "4.0.240",
+    "@remotion/zod-types": "4.0.240",
     "next": "16.0.3",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "polished": "^4.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-spring": "^9.7.3",
+    "remotion": "4.0.240",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@remotion/eslint-config": "4.0.240",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
+    "prettier": "^3.1.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   }
 }
