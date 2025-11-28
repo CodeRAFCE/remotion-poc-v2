@@ -23,6 +23,7 @@
     "@remotion/shapes": "4.0.240",
     "@remotion/transitions": "4.0.240",
     "@remotion/zod-types": "4.0.240",
+    "gsap": "^3.13.0",
     "next": "16.0.3",
     "polished": "^4.2.2",
     "react": "^18.2.0",
