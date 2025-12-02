@@ -8,15 +8,11 @@ import {
 } from "./fundamentals/CustomOpening";
 import { FrameCounter } from "./fundamentals/FrameCounter";
 import { VideoInfo } from "./fundamentals/VideoInfo";
-import { MOCK_PRODUCTIVITY_DATA } from "./productivity/constants";
 import {
-  StarsAndProductivity,
+  StarsAndProductivityReplica,
   getStarsAndProductivityDuration,
-} from "./stars-and-productivity";
-import {
-  StarsAndProductivityWithAudio,
-  getStarsAndProductivityDuration as getStarsAndProductivityWithAudioDuration,
-} from "./stars-and-productivity-with-audio";
+} from "./test-scenes/StarsAndProductivityReplica";
+import { MOCK_STARS_GIVEN } from "./test-scenes/components/MockData";
 
 // Example composition
 const HelloWorld: React.FC = () => {
@@ -110,36 +106,16 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
 
-      {/* StarsAndProductivity Scene - Complete Implementation */}
+      {/* StarsAndProductivity Replica - Test Scene */}
       <Composition
-        id="StarsAndProductivity"
-        component={StarsAndProductivity}
-        durationInFrames={getStarsAndProductivityDuration()}
+        id="StarsAndProductivityReplica"
+        component={StarsAndProductivityReplica}
+        durationInFrames={getStarsAndProductivityDuration({
+          starsGiven: MOCK_STARS_GIVEN,
+        })}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{
-          starsGiven: 42,
-          topWeekday: "3", // Wednesday (0-indexed)
-          topHour: "14", // 2pm
-          graphData: MOCK_PRODUCTIVITY_DATA,
-        }}
-      />
-
-      {/* StarsAndProductivity WITH AUDIO - Enhanced Version */}
-      <Composition
-        id="StarsAndProductivityWithAudio"
-        component={StarsAndProductivityWithAudio}
-        durationInFrames={getStarsAndProductivityWithAudioDuration()}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          starsGiven: 42,
-          topWeekday: "3", // Thursday (0-indexed: Mon=0, Tue=1, Wed=2, Thu=3)
-          topHour: "14", // 2 PM (24-hour format)
-          graphData: MOCK_PRODUCTIVITY_DATA,
-        }}
       />
     </>
   );
