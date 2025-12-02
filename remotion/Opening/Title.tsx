@@ -1,3 +1,4 @@
+import React from "react";
 import {
   AbsoluteFill,
   interpolate,
@@ -5,13 +6,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { z } from "zod";
 import { PaneEffect } from "../PaneEffect";
-import { TitleImage } from "./TitleImage";
-
+import { TitleImage, type openingTitleSchema } from "./TitleImage";
+// import { PANE_BACKGROUND, PANE_TEXT_COLOR } from "../TopLanguages/Pane"; // Missing module
 const PANE_BACKGROUND = "rgba(230, 225, 252, 0.8)";
 const PANE_TEXT_COLOR = "#01064A";
-const INNER_BORDER_RADIUS = 30;
-const PADDING = 20;
 
 const title: React.CSSProperties = {
   fontSize: 80,
@@ -24,19 +24,14 @@ const title: React.CSSProperties = {
   lineHeight: 1.1,
 };
 
-export type OpeningTitleProps = {
-  login: string;
-  startAngle: "left" | "right";
-  rocket: "blue" | "orange" | "yellow";
-  exitProgress: number;
-};
+const INNER_BORDER_RADIUS = 30;
+const PADDING = 20;
 
-export const OpeningTitle: React.FC<OpeningTitleProps> = ({
-  login,
-  exitProgress,
-  startAngle,
-  rocket,
-}) => {
+export const OpeningTitle: React.FC<
+  z.infer<typeof openingTitleSchema> & {
+    readonly exitProgress: number;
+  }
+> = ({ login, exitProgress, startAngle, rocket }) => {
   const { fps, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -51,6 +46,7 @@ export const OpeningTitle: React.FC<OpeningTitleProps> = ({
   });
 
   const rotate = 1;
+
   const startRotation = -10;
   const endRotation = 10;
 
@@ -117,7 +113,7 @@ export const OpeningTitle: React.FC<OpeningTitleProps> = ({
             borderRadius: INNER_BORDER_RADIUS + PADDING,
           }}
         >
-          <TitleImage login={login} />
+          <TitleImage startAngle={startAngle} login={login} rocket={rocket} />
           <div>
             <div>
               This is my <strong>#GitHubUnwrapped</strong>

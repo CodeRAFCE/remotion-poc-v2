@@ -1,18 +1,8 @@
-import { AbsoluteFill, Img, staticFile } from "remotion";
+import { AbsoluteFill, Img } from "remotion";
+import type { Rocket } from "../../src/config";
+// import { getSideRocketSource } from "../Spaceship"; // Missing module
 
-export type Rocket = "blue" | "orange" | "yellow";
-
-export const getSideRocketSource = (rocket: Rocket) => {
-  if (rocket === "blue") {
-    return staticFile("rocket-side-blue.png");
-  }
-  if (rocket === "orange") {
-    return staticFile("rocket-side-orange.png");
-  }
-  return staticFile("rocket-side-yellow.png");
-};
-
-const Spaceship = (props: { readonly rocket: Rocket }) => (
+const SvgComponent = (props: { readonly rocket: Rocket }) => (
   <AbsoluteFill
     style={{
       justifyContent: "center",
@@ -20,7 +10,7 @@ const Spaceship = (props: { readonly rocket: Rocket }) => (
     }}
   >
     <Img
-      src={getSideRocketSource(props.rocket)}
+      src={""} // getSideRocketSource(props.rocket) - commented out
       style={{
         width: 732 / 2,
         height: 1574 / 2,
@@ -29,4 +19,4 @@ const Spaceship = (props: { readonly rocket: Rocket }) => (
   </AbsoluteFill>
 );
 
-export default Spaceship;
+export default SvgComponent;

@@ -1,4 +1,5 @@
 import { noise2D } from "@remotion/noise";
+import React from "react";
 import {
   AbsoluteFill,
   OffthreadVideo,
@@ -6,51 +7,61 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
+import type { Rocket } from "../../src/config";
+// import { remapSpeed } from "../TopLanguages/remap-speed"; // Missing module
 import Spaceship from "./RocketFront";
-import { remapSpeed } from "./speed-remap";
-import { isWebkit } from "./utils";
+import { isWebkit } from "./devices";
 
-export type Rocket = "blue" | "orange" | "yellow";
-
-const takeOffSpeedFunction = (f: number) =>
+export const takeOffSpeedFucntion = (f: number) =>
   10 ** interpolate(f, [0, 120], [-1, 4]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 
-const getFlame = (rocket: Rocket) => {
+export const getFlame = (rocket: Rocket) => {
   if (isWebkit()) {
     if (rocket === "yellow") {
       return staticFile("exhaust-orange-hevc-safari.mp4");
     }
+
     if (rocket === "orange") {
       return staticFile("exhaust-orange-hevc-safari.mp4");
     }
+
     if (rocket === "blue") {
       return staticFile("exhaust-blue-hevc-safari.mp4");
     }
+
     throw new Error("Unknown rocket");
   }
 
   if (rocket === "yellow") {
     return staticFile("exhaust-orange-vp9-chrome.webm");
   }
+
   if (rocket === "orange") {
     return staticFile("exhaust-orange-vp9-chrome.webm");
   }
+
   if (rocket === "blue") {
     return staticFile("exhaust-blue-vp9-chrome.webm");
   }
+
   throw new Error("Unknown rocket");
+};
+
+export const getTakeOffAssetToPrefetch = (rocket: Rocket) => {
+  return [getFlame(rocket)];
 };
 
 export const TakeOff: React.FC<{
   readonly rocket: Rocket;
 }> = ({ rocket }) => {
   const frame = useCurrentFrame();
-  const acceleratedFrame = remapSpeed(frame, takeOffSpeedFunction);
-  const acceleratedShakeFrame = remapSpeed(frame, speedFunctionShake);
+  const acceleratedFrame = frame; // remapSpeed(frame, takeOffSpeedFucntion); - commented out
+  const acceleratedShakeFrame = frame; // remapSpeed(frame, speedFunctionShake); - commented out
 
   const translateX = interpolate(acceleratedFrame, [0, 100], [0, -100]);
+
   const noiseX = noise2D("seedX", acceleratedShakeFrame / 50, 0) * 3;
   const noiseY = noise2D("seedY", frame / 10, 0) * 2;
 

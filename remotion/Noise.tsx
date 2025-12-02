@@ -1,8 +1,14 @@
 import { noise2D } from "@remotion/noise";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { AbsoluteFill, useVideoConfig } from "remotion";
+import { z } from "zod";
 
 const unitSize = 15;
+
+export const noiseSchema = z.object({
+  translateX: z.number().step(1),
+  translateY: z.number(),
+});
 
 const palette = [
   "#15466C",
@@ -17,10 +23,14 @@ const palette = [
   "#465B79",
 ];
 
-export const Noise: React.FC<{
-  translateX: number;
-  translateY: number;
-}> = ({ translateX, translateY }) => {
+if (palette.length !== 10) {
+  throw new Error("Palette must have 10 colors");
+}
+
+export const Noise: React.FC<z.infer<typeof noiseSchema>> = ({
+  translateX,
+  translateY,
+}) => {
   const { width, height } = useVideoConfig();
 
   const samples = useMemo(() => {
@@ -41,6 +51,7 @@ export const Noise: React.FC<{
   const memoizedSamples = useMemo(() => {
     return samples.map((sample, i) => {
       return (
+        // eslint-disable-next-line react/no-array-index-key
         <div key={i} style={{ display: "flex", flexDirection: "row" }}>
           {sample.map((s, j) => {
             if (s.x < 0.9) {
@@ -54,6 +65,7 @@ export const Noise: React.FC<{
 
             return (
               <div
+                // eslint-disable-next-line react/no-array-index-key
                 key={`${i}-${j}`}
                 style={{
                   width: 6 * randomDigit2 * 0.1,

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   AbsoluteFill,
   Audio,
@@ -8,25 +9,32 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { Gradient } from "../Gradients/Gradient";
+import type { z } from "zod";
+import type { Rocket } from "../../src/config";
+import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
-import { BackgroundMountains } from "./Background";
-import { Foreground } from "./Foreground";
-import { TakeOff, type Rocket } from "./TakeOff";
+import { BACKGROUND_MOUNTAINS_IMAGE, BackgroundMountains } from "./Background";
+import { FOREGROUND_IMAGE, Foreground } from "./Foreground";
+import { TakeOff, getTakeOffAssetToPrefetch } from "./TakeOff";
 import { OpeningTitle } from "./Title";
-import { isMobileDevice } from "./utils";
+import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
+import { isMobileDevice } from "./devices";
 
 export const OPENING_SCENE_LENGTH = 130;
+export const OPENING_SCENE_OUT_OVERLAP = 10;
 
 const LAUNCH_SOUND = staticFile("rocket-launch.mp3");
 
-export type OpeningSceneProps = {
-  login: string;
-  startAngle: "left" | "right";
-  rocket: Rocket;
+export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
+  return [
+    LAUNCH_SOUND,
+    ...getTakeOffAssetToPrefetch(rocket),
+    FOREGROUND_IMAGE,
+    BACKGROUND_MOUNTAINS_IMAGE,
+  ];
 };
 
-const OpeningSceneFull: React.FC<OpeningSceneProps> = ({
+const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
   rocket,
@@ -76,7 +84,7 @@ const OpeningSceneFull: React.FC<OpeningSceneProps> = ({
             opacity: interpolate(exitProgress, [0, 1], [1, 0]),
           }}
         >
-          <Gradient gradient="blueRadial" />
+          <Gradient gradient={accentColorToGradient()} />
           <Noise translateX={100} translateY={30} />
         </AbsoluteFill>
         <AbsoluteFill>
@@ -108,7 +116,7 @@ const OpeningSceneFull: React.FC<OpeningSceneProps> = ({
   );
 };
 
-export const OpeningScene: React.FC<OpeningSceneProps> = ({
+export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
   rocket,

@@ -225,8 +225,17 @@
 
 ---
 
-**Phase 2: Scene Deep Dive Analysis**
+**Session 2 (Nov 28, 2025) - PHASE 3 NEW DIRECTION:**
 
-- Next: Pick ONE scene (Opening, AllPlanets, or Issues)
-- Explore folder structure and main component
-- Identify props, hooks, and animation patterns
+- ✅ **MAJOR PIVOT:** Instead of Opening Scene, learning StarsAndProductivity Scene
+- ✅ **Reason:** More complex, teaches more patterns (spring, interpolate, conditional rendering)
+- ✅ **Approach Changed:** User builds from scratch, I guide only (no code generation)
+- ✅ **Analyzed StarsAndProductivity:**
+  - 2 main sub-components: StarsGiven + Tablet
+  - Dynamic timing based on data (starsGiven count)
+  - Multiple spring animations (enter/exit)
+  - Conditional rendering based on frame numbers
+  - Complex data structure with graphs
+- 🔄 **Teaching Method:** Analyze → Understand → Build Tasks → User Codes
+- 📄 **Created:** STARS_AND_PRODUCTIVITY_GUIDE.md (detailed breakdown)
+- 🔄 **Next:** Answer understanding questions, then START TASK 1
